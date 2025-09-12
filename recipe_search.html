@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Search Tool</title>
+    <!-- Use the Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-xl w-full">
+        <h1 class="text-3xl font-bold text-center mb-4 text-gray-800">Recipe Search Tool</h1>
+        <p class="text-center text-gray-600 mb-6">Search for recipes across your favorite culinary websites.</p>
+
+        <div class="flex flex-col md:flex-row gap-2 mb-4">
+            <input type="text" id="search-input" placeholder="e.g., chicken adobo"
+                   class="flex-1 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300">
+            <button id="search-button"
+                    class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300">
+                Search
+            </button>
+        </div>
+
+        <div class="text-sm text-gray-500 text-center">
+            <p>Searches will be limited to the following sites:</p>
+            <ul class="mt-2 text-center text-sm font-medium">
+                <li>• Woks of Life</li>
+                <li>• Serious Eats</li>
+                <li>• America's Test Kitchen</li>
+                <li>• NYT Cooking</li>
+                <li>• Bon Appétit</li>
+                <li>• Korean Bapsang</li>
+                <li>• Just One Cookbook</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+
+            /**
+             * The list of websites to search within.
+             * The `site:` operator in Google Search is used to limit the search domain.
+             */
+            const websites = [
+                'woksoflife.com',
+                'seriouseats.com',
+                'americastestkitchen.com',
+                'cooking.nytimes.com',
+                'bonappetit.com',
+                'koreanbapsang.com',
+                'justonecookbook.com'
+            ];
+
+            /**
+             * Constructs and executes the search query.
+             */
+            function searchRecipes() {
+                const query = searchInput.value.trim();
+
+                // Do not proceed with an empty query
+                if (!query) {
+                    searchInput.placeholder = "Please enter a search term!";
+                    searchInput.classList.add('border-red-500');
+                    setTimeout(() => {
+                        searchInput.placeholder = "e.g., chicken adobo";
+                        searchInput.classList.remove('border-red-500');
+                    }, 2000);
+                    return;
+                }
+
+                // Create the "site:" query string for all websites
+                const siteQuery = websites.map(site => `site:${site}`).join(' OR ');
+
+                // Combine the user's query with the site query
+                const fullQuery = `${query} (${siteQuery})`;
+
+                // Encode the query string for the URL
+                const encodedQuery = encodeURIComponent(fullQuery);
+                const googleSearchUrl = `https://www.google.com/search?q=${encodedQuery}`;
+
+                // Open the search results in a new tab
+                window.open(googleSearchUrl, '_blank');
+            }
+
+            // Add event listener to the button
+            searchButton.addEventListener('click', searchRecipes);
+
+            // Add event listener for the "Enter" key on the input field
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    searchRecipes();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
