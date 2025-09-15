@@ -156,26 +156,25 @@
                 Search
             </button>
         </div>
-        
+
         <div class="flex items-center justify-center mb-4">
-            <label for="toggle-all" class="text-sm font-semibold text-gray-700 mr-2">Select All</label>
-            <div id="toggle-all-switch" role="switch" aria-checked="true" tabindex="0" class="toggle-switch-90s">
+            <label for="global-toggle-all" class="text-sm font-semibold text-gray-700 mr-2">Select All</label>
+            <div id="global-toggle-all-switch" role="switch" aria-checked="true" tabindex="0" class="toggle-switch-90s">
                 <span class="toggle-switch-handle-90s"></span>
             </div>
         </div>
         
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm text-gray-700 mt-6">
-            <div class="flex items-center">
-                <input type="checkbox" id="woks-of-life" name="website" value="woksoflife.com" checked
-                       class="checkbox-90s h-4 w-4">
-                <label for="woks-of-life" class="ml-2">Woks of Life</label>
+        <!-- Category: All-Purpose -->
+        <div class="flex items-center justify-between mt-6 mb-2">
+            <h2 class="text-lg font-bold text-gray-800">All-Purpose</h2>
+            <div class="flex items-center gap-2">
+                 <label for="all-purpose-toggle" class="text-sm font-semibold text-gray-700">Select All</label>
+                <div id="all-purpose-toggle" role="switch" aria-checked="true" tabindex="0" class="toggle-switch-90s">
+                    <span class="toggle-switch-handle-90s"></span>
+                </div>
             </div>
-            <div class="flex items-center">
-                <input type="checkbox" id="serious-eats" name="website" value="seriouseats.com" checked
-                       class="checkbox-90s h-4 w-4">
-                <label for="serious-eats" class="ml-2">Serious Eats</label>
-            </div>
+        </div>
+        <div id="all-purpose-category" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm text-gray-700">
             <div class="flex items-center">
                 <input type="checkbox" id="americas-test-kitchen" name="website" value="americastestkitchen.com" checked
                        class="checkbox-90s h-4 w-4">
@@ -191,15 +190,56 @@
                        class="checkbox-90s h-4 w-4">
                 <label for="bon-appetit" class="ml-2">Bon Appétit</label>
             </div>
+        </div>
+        
+        <!-- Category: Specialty Cuisine -->
+        <div class="flex items-center justify-between mt-6 mb-2">
+            <h2 class="text-lg font-bold text-gray-800">Specialty Cuisine</h2>
+             <div class="flex items-center gap-2">
+                <label for="specialty-toggle" class="text-sm font-semibold text-gray-700">Select All</label>
+                <div id="specialty-toggle" role="switch" aria-checked="true" tabindex="0" class="toggle-switch-90s">
+                    <span class="toggle-switch-handle-90s"></span>
+                </div>
+            </div>
+        </div>
+        <div id="specialty-category" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm text-gray-700">
             <div class="flex items-center">
-                <input type="checkbox" id="korean-bapsang" name="website" value="koreanbapsang.com" checked
+                <input type="checkbox" id="woks-of-life" name="website" value="woksoflife.com" checked
                        class="checkbox-90s h-4 w-4">
-                <label for="korean-bapsang" class="ml-2">Korean Bapsang</label>
+                <label for="woks-of-life" class="ml-2">Woks of Life (Chinese)</label>
             </div>
             <div class="flex items-center">
                 <input type="checkbox" id="just-one-cookbook" name="website" value="justonecookbook.com" checked
                        class="checkbox-90s h-4 w-4">
-                <label for="just-one-cookbook" class="ml-2">Just One Cookbook</label>
+                <label for="just-one-cookbook" class="ml-2">Just One Cookbook (Japanese)</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="korean-bapsang" name="website" value="koreanbapsang.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="korean-bapsang" class="ml-2">Korean Bapsang (Korean)</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="maangchi" name="website" value="maangchi.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="maangchi" class="ml-2">Maangchi (Korean)</label>
+            </div>
+        </div>
+        
+        <!-- Category: Culinary Science & Technique -->
+        <div class="flex items-center justify-between mt-6 mb-2">
+            <h2 class="text-lg font-bold text-gray-800">Culinary Science & Technique</h2>
+            <div class="flex items-center gap-2">
+                 <label for="science-toggle" class="text-sm font-semibold text-gray-700">Select All</label>
+                <div id="science-toggle" role="switch" aria-checked="true" tabindex="0" class="toggle-switch-90s">
+                    <span class="toggle-switch-handle-90s"></span>
+                </div>
+            </div>
+        </div>
+        <div id="science-category" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm text-gray-700">
+            <div class="flex items-center">
+                <input type="checkbox" id="serious-eats" name="website" value="seriouseats.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="serious-eats" class="ml-2">Serious Eats</label>
             </div>
         </div>
     </div>
@@ -209,25 +249,59 @@
             const searchInput = document.getElementById('search-input');
             const searchButton = document.getElementById('search-button');
             const websiteCheckboxes = document.querySelectorAll('input[name="website"]');
-            const toggleAllSwitch = document.getElementById('toggle-all-switch');
             
+            const globalToggle = document.getElementById('global-toggle-all-switch');
+            
+            const categoryToggles = {
+                'all-purpose-toggle': document.getElementById('all-purpose-category'),
+                'specialty-toggle': document.getElementById('specialty-category'),
+                'science-toggle': document.getElementById('science-category')
+            };
+
             /**
-             * Updates the state of the toggle switch.
+             * Updates the state of a single toggle switch and its checkboxes.
+             * @param {HTMLElement} toggleSwitch - The toggle switch element.
+             * @param {HTMLElement} categoryContainer - The container holding the checkboxes.
              * @param {boolean} checked - The new checked state.
              */
-            function setToggleState(checked) {
-                toggleAllSwitch.setAttribute('aria-checked', checked);
-                websiteCheckboxes.forEach(checkbox => {
+            function setCategoryState(toggleSwitch, categoryContainer, checked) {
+                toggleSwitch.setAttribute('aria-checked', checked);
+                categoryContainer.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
                     checkbox.checked = checked;
                 });
+                updateGlobalToggle();
             }
 
             /**
-             * Toggles all checkboxes on or off.
+             * Toggles a category's checkboxes on or off.
+             * @param {Event} event - The event object.
              */
-            function toggleAll() {
-                const isChecked = toggleAllSwitch.getAttribute('aria-checked') === 'true';
-                setToggleState(!isChecked);
+            function toggleCategory(event) {
+                const toggleSwitch = event.currentTarget;
+                const categoryId = toggleSwitch.id.replace('-toggle', '');
+                const categoryContainer = document.getElementById(`${categoryId}-category`);
+                const isChecked = toggleSwitch.getAttribute('aria-checked') === 'true';
+                
+                setCategoryState(toggleSwitch, categoryContainer, !isChecked);
+            }
+
+            /**
+             * Checks if all checkboxes in a container are checked.
+             * @param {HTMLElement} container - The container holding the checkboxes.
+             * @returns {boolean}
+             */
+            function areAllChecked(container) {
+                const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+                if (checkboxes.length === 0) return false;
+                return Array.from(checkboxes).every(cb => cb.checked);
+            }
+            
+            /**
+             * Updates the global toggle based on the state of all checkboxes.
+             */
+            function updateGlobalToggle() {
+                const allChecked = Array.from(websiteCheckboxes).every(cb => cb.checked);
+                globalToggle.setAttribute('aria-checked', allChecked);
             }
 
             /**
@@ -254,7 +328,6 @@
 
                 // Check if any sites are selected
                 if (selectedWebsites.length === 0) {
-                    // Use a message box instead of alert()
                     const message = "Please select at least one website to search.";
                     alert(message);
                     return;
@@ -281,23 +354,62 @@
                     searchRecipes();
                 }
             });
-            toggleAllSwitch.addEventListener('click', toggleAll);
-            toggleAllSwitch.addEventListener('keydown', (event) => {
-                if (event.key === ' ' || event.key === 'Enter') {
-                    event.preventDefault(); // Prevents page scrolling
-                    toggleAll();
+
+            // Global toggle functionality
+            globalToggle.addEventListener('click', () => {
+                const isChecked = globalToggle.getAttribute('aria-checked') === 'true';
+                const newState = !isChecked;
+                
+                // Toggle all checkboxes on the page
+                websiteCheckboxes.forEach(checkbox => {
+                    checkbox.checked = newState;
+                });
+                
+                // Update all toggles to match the new state
+                document.querySelectorAll('[id$="-toggle"]').forEach(toggle => {
+                    toggle.setAttribute('aria-checked', newState);
+                });
+
+                updateGlobalToggle();
+            });
+
+            // Add listeners for each category's toggle switch
+            document.querySelectorAll('[id$="-toggle"]').forEach(toggleSwitch => {
+                if (toggleSwitch.id !== 'global-toggle-all-switch') {
+                    toggleSwitch.addEventListener('click', toggleCategory);
+                    toggleSwitch.addEventListener('keydown', (event) => {
+                        if (event.key === ' ' || event.key === 'Enter') {
+                            event.preventDefault();
+                            toggleCategory(event);
+                        }
+                    });
                 }
             });
 
-            // Listen for changes on individual checkboxes to update the toggle switch state
+            // Listen for changes on individual checkboxes to update the toggle switch states
             websiteCheckboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', () => {
-                    const allAreChecked = Array.from(websiteCheckboxes).every(cb => cb.checked);
-                    setToggleState(allAreChecked);
+                    // Update category toggle
+                    const categoryContainer = checkbox.closest('[id$="-category"]');
+                    const categoryId = categoryContainer.id.replace('-category', '');
+                    const toggleSwitch = document.getElementById(`${categoryId}-toggle`);
+                    const allChecked = areAllChecked(categoryContainer);
+                    toggleSwitch.setAttribute('aria-checked', allChecked);
+
+                    // Update global toggle
+                    updateGlobalToggle();
                 });
             });
+
+            // Initial state update for all toggles
+            for (const toggleId in categoryToggles) {
+                const toggleSwitch = document.getElementById(toggleId);
+                const categoryContainer = categoryToggles[toggleId];
+                const allChecked = areAllChecked(categoryContainer);
+                toggleSwitch.setAttribute('aria-checked', allChecked);
+            }
+            updateGlobalToggle();
         });
     </script>
 </body>
 </html>
-
