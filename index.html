@@ -4,45 +4,203 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Search Tool</title>
-    <!-- Use the Inter font from Google Fonts -->
+    <!-- Use a monospaced font for a retro computer feel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cica&display=swap" rel="stylesheet">
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            font-family: 'Cica', monospace;
+            background-color: #008080; /* Teal background, classic Windows 95 */
+            background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* 90s style window container */
+        .window-container {
+            border: 2px solid #fff;
+            box-shadow: 
+                inset -1px -1px #000, 
+                inset 1px 1px #808080,
+                inset -2px -2px #c0c0c0,
+                inset 2px 2px #fff;
+            background-color: #c0c0c0;
+        }
+
+        /* 90s style window title bar */
+        .window-title-bar {
+            background: linear-gradient(90deg, #000080, #1030a0);
+            border-bottom: 2px solid #c0c0c0;
+            border-top: 1px solid #000080;
+            border-left: 1px solid #000080;
+            border-right: 1px solid #000080;
+        }
+        
+        /* 90s style buttons */
+        .button-90s {
+            border: 2px solid #fff;
+            box-shadow: 
+                inset -1px -1px #000,
+                inset 1px 1px #808080,
+                inset -2px -2px #c0c0c0,
+                inset 2px 2px #fff;
+            background-color: #c0c0c0;
+            color: #000;
+        }
+
+        .button-90s:active {
+            box-shadow:
+                inset 1px 1px #000,
+                inset -1px -1px #fff;
+        }
+
+        /* 90s style input field */
+        .input-90s {
+            border: 2px solid #c0c0c0;
+            box-shadow: 
+                inset 1px 1px #000,
+                inset -1px -1px #fff;
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* 90s style checkboxes */
+        .checkbox-90s {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #000;
+            background-color: #c0c0c0;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .checkbox-90s:checked {
+            background-color: #c0c0c0;
+        }
+
+        .checkbox-90s:checked::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000;
+        }
+
+        /* 90s style slider switch */
+        .toggle-switch-90s {
+            display: inline-block;
+            height: 20px;
+            width: 40px;
+            position: relative;
+            cursor: pointer;
+            border-radius: 0; /* Remove rounded corners */
+            background-color: #d1d5db; /* gray-300 */
+            transition: background-color 0.2s ease-in-out;
+            border: 2px solid #fff;
+            box-shadow: 
+                inset -1px -1px #000,
+                inset 1px 1px #808080;
+        }
+
+        .toggle-switch-90s[aria-checked="true"] {
+            background-color: #2563eb; /* blue-600 */
+        }
+
+        .toggle-switch-handle-90s {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            height: 12px;
+            width: 12px;
+            background-color: #c0c0c0;
+            border-radius: 0; /* Remove rounded corners */
+            border: 2px solid #fff;
+            box-shadow:
+                inset -1px -1px #000,
+                inset 1px 1px #808080;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .toggle-switch-90s[aria-checked="true"] .toggle-switch-handle-90s {
+            transform: translateX(18px);
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-xl w-full">
-        <h1 class="text-3xl font-bold text-center mb-4 text-gray-800">Recipe Search Tool</h1>
-        <p class="text-center text-gray-600 mb-6">Search for recipes across your favorite culinary websites.</p>
+    <div class="window-container p-4 rounded-none shadow-none max-w-2xl w-full">
+        <div class="window-title-bar flex items-center justify-between px-2 py-1 mb-4">
+            <div class="flex items-center">
+                <span class="text-white text-base">Recipe Search</span>
+            </div>
+            <div class="flex items-center gap-1">
+                <button class="button-90s w-4 h-4"></button>
+                <button class="button-90s w-4 h-4"></button>
+                <button class="button-90s w-4 h-4 font-bold text-xs leading-none">X</button>
+            </div>
+        </div>
+        
+        <p class="text-center text-gray-800 mb-6 font-bold">Customize your search by selecting your favorite recipe websites.</p>
 
         <div class="flex flex-col md:flex-row gap-2 mb-4">
             <input type="text" id="search-input" placeholder="e.g., chicken adobo"
-                   class="flex-1 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300">
+                   class="flex-1 p-2 border-2 border-gray-300 rounded-none input-90s focus:outline-none focus:ring-0">
             <button id="search-button"
-                    class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300">
+                    class="button-90s text-black font-semibold py-2 px-4 rounded-none">
                 Search
             </button>
         </div>
+        
+        <div class="flex items-center justify-center mb-4">
+            <label for="toggle-all" class="text-sm font-semibold text-gray-700 mr-2">Select All</label>
+            <div id="toggle-all-switch" role="switch" aria-checked="true" tabindex="0" class="toggle-switch-90s">
+                <span class="toggle-switch-handle-90s"></span>
+            </div>
+        </div>
+        
 
-        <div class="text-sm text-gray-500 text-center">
-            <p>Searches will be limited to the following sites:</p>
-            <ul class="mt-2 text-center text-sm font-medium">
-                <li>• Woks of Life</li>
-                <li>• Serious Eats</li>
-                <li>• America's Test Kitchen</li>
-                <li>• NYT Cooking</li>
-                <li>• Bon Appétit</li>
-                <li>• Korean Bapsang</li>
-                <li>• Just One Cookbook</li>
-            </ul>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm text-gray-700 mt-6">
+            <div class="flex items-center">
+                <input type="checkbox" id="woks-of-life" name="website" value="woksoflife.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="woks-of-life" class="ml-2">Woks of Life</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="serious-eats" name="website" value="seriouseats.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="serious-eats" class="ml-2">Serious Eats</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="americas-test-kitchen" name="website" value="americastestkitchen.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="americas-test-kitchen" class="ml-2">America's Test Kitchen</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="nyt-cooking" name="website" value="cooking.nytimes.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="nyt-cooking" class="ml-2">NYT Cooking</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="bon-appetit" name="website" value="bonappetit.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="bon-appetit" class="ml-2">Bon Appétit</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="korean-bapsang" name="website" value="koreanbapsang.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="korean-bapsang" class="ml-2">Korean Bapsang</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="just-one-cookbook" name="website" value="justonecookbook.com" checked
+                       class="checkbox-90s h-4 w-4">
+                <label for="just-one-cookbook" class="ml-2">Just One Cookbook</label>
+            </div>
         </div>
     </div>
 
@@ -50,23 +208,30 @@
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('search-input');
             const searchButton = document.getElementById('search-button');
-
+            const websiteCheckboxes = document.querySelectorAll('input[name="website"]');
+            const toggleAllSwitch = document.getElementById('toggle-all-switch');
+            
             /**
-             * The list of websites to search within.
-             * The `site:` operator in Google Search is used to limit the search domain.
+             * Updates the state of the toggle switch.
+             * @param {boolean} checked - The new checked state.
              */
-            const websites = [
-                'woksoflife.com',
-                'seriouseats.com',
-                'americastestkitchen.com',
-                'cooking.nytimes.com',
-                'bonappetit.com',
-                'koreanbapsang.com',
-                'justonecookbook.com'
-            ];
+            function setToggleState(checked) {
+                toggleAllSwitch.setAttribute('aria-checked', checked);
+                websiteCheckboxes.forEach(checkbox => {
+                    checkbox.checked = checked;
+                });
+            }
 
             /**
-             * Constructs and executes the search query.
+             * Toggles all checkboxes on or off.
+             */
+            function toggleAll() {
+                const isChecked = toggleAllSwitch.getAttribute('aria-checked') === 'true';
+                setToggleState(!isChecked);
+            }
+
+            /**
+             * Constructs and executes the search query based on selected websites.
              */
             function searchRecipes() {
                 const query = searchInput.value.trim();
@@ -82,8 +247,21 @@
                     return;
                 }
 
-                // Create the "site:" query string for all websites
-                const siteQuery = websites.map(site => `site:${site}`).join(' OR ');
+                // Get all checked websites
+                const selectedWebsites = Array.from(websiteCheckboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => `site:${checkbox.value}`);
+
+                // Check if any sites are selected
+                if (selectedWebsites.length === 0) {
+                    // Use a message box instead of alert()
+                    const message = "Please select at least one website to search.";
+                    alert(message);
+                    return;
+                }
+
+                // Create the combined "site:" query string
+                const siteQuery = selectedWebsites.join(' OR ');
 
                 // Combine the user's query with the site query
                 const fullQuery = `${query} (${siteQuery})`;
@@ -96,16 +274,30 @@
                 window.open(googleSearchUrl, '_blank');
             }
 
-            // Add event listener to the button
+            // Event listeners
             searchButton.addEventListener('click', searchRecipes);
-
-            // Add event listener for the "Enter" key on the input field
             searchInput.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
                     searchRecipes();
                 }
             });
+            toggleAllSwitch.addEventListener('click', toggleAll);
+            toggleAllSwitch.addEventListener('keydown', (event) => {
+                if (event.key === ' ' || event.key === 'Enter') {
+                    event.preventDefault(); // Prevents page scrolling
+                    toggleAll();
+                }
+            });
+
+            // Listen for changes on individual checkboxes to update the toggle switch state
+            websiteCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const allAreChecked = Array.from(websiteCheckboxes).every(cb => cb.checked);
+                    setToggleState(allAreChecked);
+                });
+            });
         });
     </script>
 </body>
 </html>
+
